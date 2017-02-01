@@ -20,17 +20,20 @@ db.transaction(function (tx) {
 
 
 myApp.onPageInit('addItem', function (page) {
-  // run createContentPage func after link was clicked
   $$('#addItemAction').on('click', function () {
     var item = myApp.formToData("#addItemForm");
-    var keys = Object.keys(item);
+
+    //first things first lets verify we have all the required keys
+    var keys = Object.keys(item); //lets get all the keys
     if(!keys.includes("description") || !keys.includes("price")) {
       alert("please fill out all fields");
       return;
     }
+
+    //alright now lets add it
     db.transaction(
       function (tx) {
-        tx.executeSql("INSERT INTO shoppingbuddy(id, description, price) VALUES()");
+        tx.executeSql("INSERT INTO shoppingbuddy(description, price) VALUES(" + item.description + "," + item.price + ")");
       }, function (success) {
         alert("added item to shopping list");
       }, function (error) {
