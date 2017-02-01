@@ -12,7 +12,7 @@ var mainView = myApp.addView('.view-main', {
 
 var db = window.openDatabase("shoppingbuddy", "1.0", "Shopping Buddy", 1000000);
 db.transaction(function (tx) {
-    tx.executeSql("CREATE TABLE IF NOT EXISTS shoppingbuddy (id INTEGER PRIMARY KEY, description TEXT, price REAL)");
+    tx.executeSql("CREATE TABLE IF NOT EXISTS shoppingbuddy (description TEXT, price REAL)");
   }, function (success) { }, function (error) {
     alert(JSON.stringify(error));
   }
