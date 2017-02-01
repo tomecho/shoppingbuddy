@@ -12,8 +12,8 @@ var mainView = myApp.addView('.view-main', {
 
 var db = window.openDatabase("shoppingbuddy", "1.0", "Shopping Buddy", 1000000);
 db.transaction(function (tx) {
-
-  }, function (success) {}, function (error) {
+    tx.executeSql("CREATE TABLE IF NOT EXISTS shoppingbuddy (id INTEGER PRIMARY KEY, description TEXT, price REAL)");
+  }, function (success) { }, function (error) {
     alert(JSON.stringify(error));
   }
 );
@@ -22,7 +22,20 @@ db.transaction(function (tx) {
 myApp.onPageInit('addItem', function (page) {
   // run createContentPage func after link was clicked
   $$('#addItemAction').on('click', function () {
-    var item= myApp.formToData("#addItemForm");
-    db.transaction
+    var item = myApp.formToData("#addItemForm");
+    var keys = Object.keys(item);
+    if(!keys.includes("description") || !keys.includes("price")) {
+      alert("please fill out all fields");
+      return;
+    }
+    db.transaction(
+      function (tx) {
+        tx.executeSql("INSERT INTO shoppingbuddy(id, description, price) VALUES()");
+      }, function (success) {
+        alert("added item to shopping list");
+      }, function (error) {
+        alert("failed to add item to shopping list");
+      }
+    );
   });
 });
