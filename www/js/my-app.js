@@ -50,3 +50,30 @@ myApp.onPageInit('addItem', function (page) {
       });
   });
 });
+
+myApp.onPageInit('shoppingList', function (page) {
+  $scope.db.transaction(function (tx) {
+    tx.executeSql("SELECT * from shoppingbuddy", [], function (tx, results) {
+      // for some reason need to convert this, they cant handle a plain result set
+      var shoppingList = [];
+      for(var i=0; i<results.rows.length; i++) {
+        shoppingList.push(results.rows.item(i));
+      }
+
+      myApp.virtualList(".virtual-list-items", {
+        items: shoppingList,
+        template: '<li class="item-content">' +
+                    //'<div class="item-media"><img src="{{picture}}"></div>' +
+                    '<div class="item-inner">' +
+                        '<div class="item-title-row">' +
+                          '<div class="item-title">{{name}}</div>' +
+                          '<div class="item-after">{{price}}</div>' +
+                        '</div>' +
+                        '<div class="item-text">{{description}}</div>' +
+                    '</div>' +
+                 '</li>',
+        height: 55
+      });
+    });
+  }, function (err) { debugger; alert(JSON.stringify(err)) });
+});
