@@ -50,3 +50,26 @@ myApp.onPageInit('addItem', function (page) {
       });
   });
 });
+
+myApp.onPageInit('shoppingList', function (page) {
+  myApp.virtualList(".virtual-list-items", {
+    items: [
+      {
+        name: "alpaca",
+        price: "$4.00",
+        description: "A sturdy beast of burdeon!"
+      }
+    ],
+    template: '<li class="item-content">' +
+                '<div class="item-media"><img src="{{picture}}"></div>' +
+                '<div class="item-inner">' +
+                    '<div class="item-title-row">' +
+                      '<div class="item-title">{{name}}</div>' +
+                      '<div class="item-after">{{price}}</div>' +
+                    '</div>' +
+                    '<div class="item-text">{{description}}</div>' +
+                '</div>' +
+             '</li>'
+  });
+
+});
