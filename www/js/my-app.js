@@ -53,12 +53,12 @@ myApp.onPageInit('addItem', function (page) {
 
 myApp.onPageInit('shoppingList', function (page) {
   $scope.db.transaction(function (tx) {
-    tx.executeSql("SELECT * from shoppingbuddy", function (tx, results) {
-      // for some reason need to convert this
+    tx.executeSql("SELECT * from shoppingbuddy", [], function (tx, results) {
+      // for some reason need to convert this, they cant handle a plain result set
       var shoppingList = [];
-      //for(var i=0; i<results.rows.length; i++) {
-        //items.push(results.rows.item(i));
-      //}
+      for(var i=0; i<results.rows.length; i++) {
+        shoppingList.push(results.rows.item(i));
+      }
 
       myApp.virtualList(".virtual-list-items", {
         items: shoppingList,
@@ -72,8 +72,8 @@ myApp.onPageInit('shoppingList', function (page) {
                         '<div class="item-text">{{description}}</div>' +
                     '</div>' +
                  '</li>',
-        height: 65
+        height: 55
       });
     });
-  }, function (err) { alert(JSON.stringify(err)) });
+  }, function (err) { debugger; alert(JSON.stringify(err)) });
 });
