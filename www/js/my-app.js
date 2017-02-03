@@ -3,6 +3,7 @@ var myApp = new Framework7();
 
 // Export selectors engine
 var $$ = Dom7;
+var $scope = {};
 
 // Add view
 var mainView = myApp.addView('.view-main', {
@@ -10,14 +11,18 @@ var mainView = myApp.addView('.view-main', {
   dynamicNavbar: true
 });
 
-var db = window.openDatabase("shoppingbuddy", "1.0", "Shopping Buddy", 1000000);
-db.transaction(function (tx) {
-    tx.executeSql("CREATE TABLE IF NOT EXISTS shoppingbuddy (description TEXT, price REAL)");
-  }, function (success) { }, function (error) {
-    alert(JSON.stringify(error));
-  }
-);
+document.addEventListener("deviceready", onDeviceReady, false);
 
+function onDeviceReady() {
+  var db = window.openDatabase("shoppingbuddy", "1.0", "Shopping Buddy", 1000000);
+  $scope.db = db;
+  db.transaction(function (tx) {
+      tx.executeSql("CREATE TABLE IF NOT EXISTS shoppingbuddy (id INTEGER PRIMARY KEY, description TEXT, price REAL)");
+    }, function (error) {
+      debugger;
+      alert(JSON.stringify(error));
+    });
+}
 
 myApp.onPageInit('addItem', function (page) {
   $$('#addItemAction').on('click', function () {
@@ -33,9 +38,14 @@ myApp.onPageInit('addItem', function (page) {
     //alright now lets add it
     db.transaction(
       function (tx) {
-        tx.executeSql("INSERT INTO shoppingbuddy(description, price) VALUES(" + item.description + "," + item.price + ")");
-      }, function (success) {
-        alert("added item to shopping list");
+        tx.executeSql("INSERT INTO shoppingbuddy(description, price) VALUES(?, ?)", [item.description, item.price],
+          function (success, results) {
+            alert(JSON.stringify(results));
+          },
+          function (err) {
+            alert (JSON.stringify(err));
+          }
+        );
       }, function (error) {
         alert("failed to add item to shopping list");
       }
