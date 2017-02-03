@@ -19,7 +19,6 @@ function onDeviceReady() {
   db.transaction(function (tx) {
       tx.executeSql("CREATE TABLE IF NOT EXISTS shoppingbuddy (id INTEGER PRIMARY KEY, description TEXT, price REAL)");
     }, function (error) {
-      debugger;
       alert(JSON.stringify(error));
     });
 }
@@ -36,11 +35,12 @@ myApp.onPageInit('addItem', function (page) {
     }
 
     //alright now lets add it
-    db.transaction(
+    $scope.db.transaction(
       function (tx) {
         tx.executeSql("INSERT INTO shoppingbuddy(description, price) VALUES(?, ?)", [item.description, item.price],
-          function (success, results) {
+          function (tx, results) {
             alert(JSON.stringify(results));
+            alert("Added to shopping list");
           },
           function (err) {
             alert (JSON.stringify(err));
