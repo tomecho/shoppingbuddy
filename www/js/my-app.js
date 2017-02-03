@@ -61,7 +61,7 @@ myApp.onPageInit('shoppingList', function (page) {
       }
     ],
     template: '<li class="item-content">' +
-                '<div class="item-media"><img src="{{picture}}"></div>' +
+                //'<div class="item-media"><img src="{{picture}}"></div>' +
                 '<div class="item-inner">' +
                     '<div class="item-title-row">' +
                       '<div class="item-title">{{name}}</div>' +
@@ -69,7 +69,8 @@ myApp.onPageInit('shoppingList', function (page) {
                     '</div>' +
                     '<div class="item-text">{{description}}</div>' +
                 '</div>' +
-             '</li>'
+             '</li>',
+    height: 80
   });
 
 });
