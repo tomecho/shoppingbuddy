@@ -1,0 +1,37 @@
+<!-- We don't need full layout here, because this page will be parsed with Ajax-->
+<!-- Top Navbar-->
+<div class="navbar">
+  <div class="navbar-inner">
+    <div class="left"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+    <div class="center sliding">Shopping List</div>
+    <div class="right">
+      <!-- Right link contains only icon - additional "icon-only" class--><a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+    </div>
+  </div>
+</div>
+<div class="pages">
+  <!-- Page, data-page contains page name-->
+  <div data-page="shoppingList" class="page">
+    <form data-search-list=".virtual-list-items" class="searchbar searchbar-init">
+      <div class="searchbar-input">
+        <input type="search" placeholder="Search"/><a href="#" class="searchbar-clear"></a>
+      </div><a href="#" class="searchbar-cancel">Cancel</a>
+    </form>
+    <div class="searchbar-overlay"></div>
+    <div class="page-content">
+      <div class="content-block">
+        <p>Shopping List</p>
+      </div>
+      <div class="list-block virtual-list-items searchbar-found media-list"></div>
+      <div class="list-block searchbar-not-found">
+        <ul>
+          <li class="item-content">
+            <div class="item-inner">
+              <div class="item-title">Nothing found</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
