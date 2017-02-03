@@ -39,7 +39,6 @@ myApp.onPageInit('addItem', function (page) {
       function (tx) {
         tx.executeSql("INSERT INTO shoppingbuddy(description, price) VALUES(?, ?)", [item.description, item.price],
           function (tx, results) {
-            alert(JSON.stringify(results));
             alert("Added to shopping list");
           },
           function (err) {
@@ -48,7 +47,6 @@ myApp.onPageInit('addItem', function (page) {
         );
       }, function (error) {
         alert("failed to add item to shopping list");
-      }
-    );
+      });
   });
 });
