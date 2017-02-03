@@ -17,7 +17,8 @@ function onDeviceReady() {
   var db = window.openDatabase("shoppingbuddy", "1.0", "Shopping Buddy", 1000000);
   $scope.db = db;
   db.transaction(function (tx) {
-      tx.executeSql("CREATE TABLE IF NOT EXISTS shoppingbuddy (id INTEGER PRIMARY KEY, description TEXT, price REAL)");
+      //fyi there is a primary key `rowid` it is implicit
+      tx.executeSql("CREATE TABLE IF NOT EXISTS shoppingbuddy (description TEXT, price REAL)");
     }, function (error) {
       alert(JSON.stringify(error));
     });
